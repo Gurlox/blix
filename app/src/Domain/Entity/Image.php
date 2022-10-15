@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Domain\Entity;
 
 use App\Enum\ImageExtensionEnum;
-use App\ValueObject\Uuid;
 use App\ValueObject\UuidInterface;
 use Assert\Assert;
 use Assert\LazyAssertionException;
@@ -17,8 +16,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class Image
 {
     #[ORM\Id]
-    #[ORM\Column(type: 'string')]
-    public UuidInterface $id;
+    #[ORM\Column(type: 'uuid')]
+    private UuidInterface $id;
 
     #[ORM\Column(type: 'string')]
     private string $originalFileName;
@@ -44,7 +43,7 @@ class Image
     /**
      * @throws LazyAssertionException
      */
-    public static function createFromFile(UploadedFile $file): self
+    public static function createFromFile(UuidInterface $id, UploadedFile $file): self
     {
         Assert::lazy()
             ->that($file->guessExtension())->inArray(ImageExtensionEnum::availableValues(), 'Image has invalid extension')
@@ -52,8 +51,8 @@ class Image
             ->verifyNow();
 
         return new self(
-            Uuid::create(),
-            $file->getFilename(),
+            $id,
+            $file->getClientOriginalName(),
             ImageExtensionEnum::from($file->guessExtension()),
             $file->getSize(),
         );
@@ -77,5 +76,10 @@ class Image
     public function getOriginalFileName(): string
     {
         return $this->originalFileName;
+    }
+
+    public function getFileName(): string
+    {
+        return sprintf("%s.%s", $this->id->toString(), $this->getExtension()->value);
     }
 }

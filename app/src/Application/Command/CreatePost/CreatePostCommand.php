@@ -10,9 +10,10 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 class CreatePostCommand extends Command
 {
     public function __construct(
+        public readonly string $id,
         public readonly string $title,
         public readonly string $text,
-        public UploadedFile $image,
+        public readonly string $imageId,
     ) {
     }
 }

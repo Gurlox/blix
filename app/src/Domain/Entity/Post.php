@@ -15,7 +15,7 @@ class Post
     private const ALLOWED_TEXT_HTML_TAGS = ['ul', 'li', 'ol', 'p', 'strong'];
 
     #[ORM\Id]
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'uuid')]
     private readonly UuidInterface $id;
 
     #[ORM\Column(type: 'string')]
@@ -24,7 +24,7 @@ class Post
     #[ORM\Column(type: 'string')]
     private string $text;
 
-    #[ORM\OneToOne(targetEntity: Image::class)]
+    #[ORM\ManyToOne(targetEntity: Image::class)]
     private Image $image;
 
     public function __construct(

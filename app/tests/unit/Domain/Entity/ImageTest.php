@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Domain\Entity;
+namespace tests\unit\Domain\Entity;
 
 use Assert\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;

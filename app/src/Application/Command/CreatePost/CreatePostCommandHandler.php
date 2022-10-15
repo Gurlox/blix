@@ -21,10 +21,7 @@ class CreatePostCommandHandler implements CommandHandler
 
     public function __invoke(CreatePostCommand $command): void
     {
-        $image = Image::createFromFile($command->image);
-        $post = new Post(Uuid::create(), $command->title, $command->text, $image);
-
-        $this->imageRepository->save($image, $command->image);
-        $this->postRepository->save($post);
+        $image = $this->imageRepository->getById(Uuid::create($command->imageId));
+        $this->postRepository->save(new Post(Uuid::create($command->id), $command->title, $command->text, $image));
     }
 }
