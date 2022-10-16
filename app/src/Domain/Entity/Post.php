@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Domain\Entity;
 
 use Assert\Assert;
+use Assert\InvalidArgumentException;
 use Doctrine\ORM\Mapping as ORM;
 use App\ValueObject\UuidInterface;
 
@@ -49,6 +50,9 @@ class Post
         return $this->title;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function setTitle(string $title): void
     {
         Assert::that($title)->betweenLength(10, 80, 'Title length should be between 10 and 80');
@@ -60,6 +64,9 @@ class Post
         return $this->text;
     }
 
+    /**
+     * @throws InvalidArgumentException
+     */
     public function setText(string $text): void
     {
         Assert::that($text)->minLength(20, 'Text minimum length should be 20');
