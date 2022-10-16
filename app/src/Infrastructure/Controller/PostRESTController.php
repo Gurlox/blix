@@ -21,6 +21,7 @@ use App\Application\DTO\PostReadDTO;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use App\Application\DTO\PostListReadDTO;
 
+#[Route('/api/posts', name: 'posts_')]
 /**
  * @OA\Tag(name="Post")
  */
@@ -32,7 +33,7 @@ class PostRESTController
     ) {
     }
 
-    #[Route('/api/posts', name: 'create_post', methods: ['POST'])]
+    #[Route('', name: 'create_post', methods: ['POST'])]
     /**
      * @OA\RequestBody(
      *     required=true,
@@ -89,7 +90,7 @@ class PostRESTController
         return new JsonResponse(['postId' => $id->toString()], Response::HTTP_CREATED);
     }
 
-    #[Route('/api/posts/list', name: 'get_posts', methods: ['GET'])]
+    #[Route('/list', name: 'get_posts', methods: ['GET'])]
     /**
      * @OA\Parameter(
      *     name="page",
@@ -132,7 +133,7 @@ class PostRESTController
         );
     }
 
-    #[Route('/api/posts/{id}', name: 'get_post', methods: ['GET'])]
+    #[Route('/{id}', name: 'get_post', methods: ['GET'])]
     /**
      * @OA\Response(
      *     @Model(type=PostReadDTO::class),
