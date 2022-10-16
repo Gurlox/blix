@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace tests\unit\Domain\Entity;
 
+use App\Domain\Entity\Image;
+use App\ValueObject\Uuid;
 use Assert\InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -25,7 +27,7 @@ class ImageTest extends TestCase
 
         // then
         $this->expectException(InvalidArgumentException::class);
-        Image::createFromFile($uploadedFile);
+        Image::createFromFile(Uuid::create(), $uploadedFile);
     }
 
     public function testCreateFromFileWithInvalidFileSizeShouldThrowException(): void
@@ -43,6 +45,6 @@ class ImageTest extends TestCase
 
         // then
         $this->expectException(InvalidArgumentException::class);
-        Image::createFromFile($uploadedFile);
+        Image::createFromFile(Uuid::create(), $uploadedFile);
     }
 }

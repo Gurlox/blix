@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace tests\unit\Domain\Entity;
 
+use App\Domain\Entity\Image;
+use App\Domain\Entity\Post;
 use App\ValueObject\Uuid;
 use App\ValueObject\UuidInterface;
 use Assert\InvalidArgumentException;

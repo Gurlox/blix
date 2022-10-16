@@ -3,7 +3,7 @@ Set up:
 - docker-compose up -d
 - docker exec -it php bash
 - composer install
-- composer init
+- composer db-reset
 
 Tests:
 - php bin/phpunit tests/functional
