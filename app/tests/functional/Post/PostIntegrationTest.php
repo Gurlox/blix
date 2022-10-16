@@ -84,18 +84,12 @@ class PostIntegrationTest extends WebTestCase
         $this->createPost($title, $text, $imageId);
 
         // when then
-        $this->client->request(
-            Request::METHOD_GET,
-            '/api/posts/list',
-            [
-                'page' => 1,
-                'perPage' => 4,
-            ],
-        );
-
-        $result = json_decode($this->client->getResponse()->getContent(), true);
+        $result = $this->getPostsList(1, 4);
         $this->assertCount(4, $result['posts']);
-        $this->assertEquals(6, $result['totalCount']);
+
+        // when then
+        $result = $this->getPostsList(2, 4);
+        $this->assertCount(2, $result['posts']);
     }
 
     private function createImage(string $imagePath): array
@@ -139,6 +133,20 @@ class PostIntegrationTest extends WebTestCase
         $this->client->request(
             Request::METHOD_GET,
             '/api/posts/' . $postId,
+        );
+
+        return json_decode($this->client->getResponse()->getContent(), true);
+    }
+
+    private function getPostsList(int $page, int $perPage): array
+    {
+        $this->client->request(
+            Request::METHOD_GET,
+            '/api/posts/list',
+            [
+                'page' => $page,
+                'perPage' => $perPage,
+            ],
         );
 
         return json_decode($this->client->getResponse()->getContent(), true);

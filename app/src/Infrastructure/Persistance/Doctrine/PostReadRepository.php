@@ -8,6 +8,7 @@ use App\Application\DTO\ImageReadDTO;
 use App\Application\DTO\PostReadDTO;
 use App\Application\Repository\PostReadRepositoryInterface;
 use App\Domain\Entity\Post;
+use App\ValueObject\Paging;
 use App\ValueObject\UuidInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -34,13 +35,13 @@ class PostReadRepository extends ServiceEntityRepository implements PostReadRepo
         return $this->createPostReadDTO($post);
     }
 
-    public function getPaginatedList(int $page, int $perPage): array
+    public function getPaginatedList(Paging $paging): array
     {
         $posts = $this->getEntityManager()->getRepository(Post::class)
             ->createQueryBuilder('p')
             ->select('p')
-            ->setFirstResult($page - 1)
-            ->setMaxResults($perPage)
+            ->setFirstResult($paging->getOffset())
+            ->setMaxResults($paging->getLimit())
             ->getQuery()
             ->getResult();
 

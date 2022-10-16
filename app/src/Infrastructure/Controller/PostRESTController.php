@@ -115,8 +115,8 @@ class PostRESTController
 
         try {
             Assert::lazy()
-                ->that($page)->numeric()->min(1)
-                ->that($perPage)->numeric()->min(1)
+                ->that($page)->numeric()
+                ->that($perPage)->numeric()
                 ->verifyNow();
         } catch (InvalidArgumentException $exception) {
             return new JsonResponse(['message' => $exception->getMessage()], Response::HTTP_BAD_REQUEST);
