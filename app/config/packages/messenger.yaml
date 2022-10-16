@@ -28,4 +28,5 @@ framework:
             sync: 'sync://'
 
             # Route your messages to the transports
-            # 'App\Message\YourMessage': async
+            ## FOR ASYNC
+            #'App\Application\Command\CreatePost\CreatePostCommand': async
